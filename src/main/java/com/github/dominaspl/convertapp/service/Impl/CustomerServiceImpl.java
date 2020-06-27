@@ -1,8 +1,9 @@
 package com.github.dominaspl.convertapp.service.Impl;
 
 import com.github.dominaspl.convertapp.domain.dto.CustomerDTO;
-import com.github.dominaspl.convertapp.domain.entity.CustomerEntity;
 import com.github.dominaspl.convertapp.domain.enumeration.AssertionErrorKey;
+import com.github.dominaspl.convertapp.domain.enumeration.BusinessExceptionKey;
+import com.github.dominaspl.convertapp.domain.exception.BusinessException;
 import com.github.dominaspl.convertapp.persistence.dao.ContactDAO;
 import com.github.dominaspl.convertapp.persistence.dao.CustomerDAO;
 import com.github.dominaspl.convertapp.persistence.mapper.ContactMapper;
@@ -35,9 +36,11 @@ public class CustomerServiceImpl implements CustomerService {
         if (Objects.isNull(customerDTO)) {
             throw new AssertionError(AssertionErrorKey.PROVIDED_OBJECT_CANNOT_BE_NULL);
         }
-        CustomerEntity customer = customerMapper.mapToEntity(customerDTO);
         try {
-            Long customerId = customerDAO.save(customer);
+            Long customerId = customerDAO.save(customerMapper.mapToEntity(customerDTO));
+            if (Objects.isNull(customerId)) {
+                throw new BusinessException(BusinessExceptionKey.GIVEN_OBJECT_NOT_FOUND_IN_DATABASE);
+            }
             contactDAO.save(contactMapper.mapToEntity(customerDTO.getContact()), customerId);
         } catch (SQLException e) {
             e.printStackTrace();
