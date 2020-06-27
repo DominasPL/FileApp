@@ -8,7 +8,7 @@ public class CustomerDTO {
 
     private Integer age;
 
-    private ContactDTO contactDTO;
+    private ContactDTO contact;
 
     public String getName() {
         return name;
@@ -34,11 +34,11 @@ public class CustomerDTO {
         this.age = age;
     }
 
-    public ContactDTO getContactDTO() {
-        return contactDTO;
+    public ContactDTO getContact() {
+        return contact;
     }
 
-    public void setContactDTO(ContactDTO contactDTO) {
-        this.contactDTO = contactDTO;
+    public void setContact(ContactDTO contact) {
+        this.contact = contact;
     }
 }

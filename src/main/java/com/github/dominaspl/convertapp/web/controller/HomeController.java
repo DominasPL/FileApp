@@ -24,6 +24,6 @@ public class HomeController {
 
     @PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
     public void saveFile(@RequestBody @Valid CustomerDTO customerDTO) {
-
+        customerService.saveCustomer(customerDTO);
     }
 }

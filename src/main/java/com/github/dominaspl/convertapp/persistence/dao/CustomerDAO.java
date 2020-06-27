@@ -16,7 +16,10 @@ public class CustomerDAO {
     }
 
     public void save(CustomerEntity customer) {
-
+        jdbcTemplate.update("INSERT INTO T_CUSTOMERS (NAME, SURNAME, AGE) VALUES (?, ?, ?)",
+                customer.getName(),
+                customer.getSurname(),
+                customer.getAge()
+        );
     }
-
 }

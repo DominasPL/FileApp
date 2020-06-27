@@ -10,12 +10,10 @@ public class CustomerEntity {
 
     private Integer age;
 
+    private ContactEntity contact;
+
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -42,5 +40,11 @@ public class CustomerEntity {
         this.age = age;
     }
 
+    public ContactEntity getContact() {
+        return contact;
+    }
 
+    public void setContact(ContactEntity contact) {
+        this.contact = contact;
+    }
 }
