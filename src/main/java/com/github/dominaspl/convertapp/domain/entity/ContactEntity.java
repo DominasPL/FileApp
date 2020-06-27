@@ -1,28 +1,16 @@
 package com.github.dominaspl.convertapp.domain.entity;
 
-import com.github.dominaspl.convertapp.domain.enumeration.ContactType;
-
 public class ContactEntity {
 
-    private Long id;
-
-    private ContactType type;
+    private Integer type;
 
     private String contact;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public ContactType getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(ContactType type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

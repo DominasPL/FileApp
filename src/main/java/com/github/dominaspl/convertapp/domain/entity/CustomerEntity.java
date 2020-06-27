@@ -10,8 +10,6 @@ public class CustomerEntity {
 
     private Integer age;
 
-    private ContactEntity contact;
-
     public Long getId() {
         return id;
     }
@@ -40,11 +38,4 @@ public class CustomerEntity {
         this.age = age;
     }
 
-    public ContactEntity getContact() {
-        return contact;
-    }
-
-    public void setContact(ContactEntity contact) {
-        this.contact = contact;
-    }
 }

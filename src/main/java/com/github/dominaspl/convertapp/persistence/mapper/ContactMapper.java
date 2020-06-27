@@ -3,7 +3,6 @@ package com.github.dominaspl.convertapp.persistence.mapper;
 import com.github.dominaspl.convertapp.domain.dto.ContactDTO;
 import com.github.dominaspl.convertapp.domain.entity.ContactEntity;
 import com.github.dominaspl.convertapp.domain.enumeration.AssertionErrorKey;
-import com.github.dominaspl.convertapp.domain.enumeration.ContactType;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -27,16 +26,15 @@ public class ContactMapper implements Mapper<ContactDTO, ContactEntity> {
                 "^(?:([^@/<>'\\\"]+)@)?([^@/<>'\\\"]+)(?:/([^<>'\\\"]*))?$"
         );
         ContactEntity contact = new ContactEntity();
-        contact.setType(ContactType.UNKNOWN);
+        contact.setType(0);
         String contactType = contactDTO.getContact();
         Pattern pattern;
         Matcher matcher;
-        ContactType[] types = ContactType.values();
         for (int i = 0; i < regexList.size(); i++) {
             pattern = Pattern.compile(regexList.get(i));
             matcher = pattern.matcher(contactType);
             if (matcher.matches()) {
-                contact.setType(types[i + 1]);
+                contact.setType(i + 1);
                 break;
             }
         }
