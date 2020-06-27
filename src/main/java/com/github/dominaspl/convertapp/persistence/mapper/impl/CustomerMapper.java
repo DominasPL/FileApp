@@ -1,11 +1,14 @@
-package com.github.dominaspl.convertapp.persistence.mapper;
+package com.github.dominaspl.convertapp.persistence.mapper.impl;
 
 import com.github.dominaspl.convertapp.domain.dto.CustomerDTO;
 import com.github.dominaspl.convertapp.domain.entity.CustomerEntity;
 import com.github.dominaspl.convertapp.domain.enumeration.AssertionErrorKey;
+import com.github.dominaspl.convertapp.persistence.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Component
 public class CustomerMapper implements Mapper<CustomerDTO, CustomerEntity> {
@@ -23,4 +26,11 @@ public class CustomerMapper implements Mapper<CustomerDTO, CustomerEntity> {
         return customer;
     }
 
+    @Override
+    public List<CustomerEntity> mapToEntities(List<CustomerDTO> customerDTOList) {
+        if (Objects.isNull(customerDTOList)) {
+            throw new AssertionError(AssertionErrorKey.PROVIDED_OBJECT_CANNOT_BE_NULL);
+        }
+        return customerDTOList.stream().map(c -> mapToEntity(c)).collect(Collectors.toList());
+    }
 }

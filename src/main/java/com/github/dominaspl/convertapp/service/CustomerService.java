@@ -2,6 +2,8 @@ package com.github.dominaspl.convertapp.service;
 
 import com.github.dominaspl.convertapp.domain.dto.CustomerDTO;
 
+import java.util.List;
+
 public interface CustomerService {
-    void saveCustomer(CustomerDTO customerDTO);
+    void saveCustomers(List<CustomerDTO> customerDTO);
 }

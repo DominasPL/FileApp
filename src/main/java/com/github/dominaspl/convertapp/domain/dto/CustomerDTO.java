@@ -1,5 +1,7 @@
 package com.github.dominaspl.convertapp.domain.dto;
 
+import java.util.List;
+
 public class CustomerDTO {
 
     private String name;
@@ -8,7 +10,7 @@ public class CustomerDTO {
 
     private Integer age;
 
-    private ContactDTO contact;
+    private List<ContactDTO> contacts;
 
     public String getName() {
         return name;
@@ -34,11 +36,11 @@ public class CustomerDTO {
         this.age = age;
     }
 
-    public ContactDTO getContact() {
-        return contact;
+    public List<ContactDTO> getContacts() {
+        return contacts;
     }
 
-    public void setContact(ContactDTO contact) {
-        this.contact = contact;
+    public void setContacts(List<ContactDTO> contacts) {
+        this.contacts = contacts;
     }
 }

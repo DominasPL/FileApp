@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/")
@@ -23,7 +24,7 @@ public class HomeController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
-    public void saveFile(@RequestBody @Valid CustomerDTO customerDTO) {
-        customerService.saveCustomer(customerDTO);
+    public void saveFile(@RequestBody @Valid List<CustomerDTO> customerDTO) {
+        customerService.saveCustomers(customerDTO);
     }
 }

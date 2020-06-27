@@ -1,8 +1,9 @@
-package com.github.dominaspl.convertapp.persistence.mapper;
+package com.github.dominaspl.convertapp.persistence.mapper.impl;
 
 import com.github.dominaspl.convertapp.domain.dto.ContactDTO;
 import com.github.dominaspl.convertapp.domain.entity.ContactEntity;
 import com.github.dominaspl.convertapp.domain.enumeration.AssertionErrorKey;
+import com.github.dominaspl.convertapp.persistence.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Component
 public class ContactMapper implements Mapper<ContactDTO, ContactEntity> {
@@ -40,6 +42,14 @@ public class ContactMapper implements Mapper<ContactDTO, ContactEntity> {
         }
         contact.setContact(contactType);
         return contact;
+    }
+
+    @Override
+    public List<ContactEntity> mapToEntities(List<ContactDTO> contactDTOList) {
+        if (Objects.isNull(contactDTOList)) {
+            throw new AssertionError(AssertionErrorKey.PROVIDED_OBJECT_CANNOT_BE_NULL);
+        }
+        return contactDTOList.stream().map(c -> mapToEntity(c)).collect(Collectors.toList());
     }
 
 }
