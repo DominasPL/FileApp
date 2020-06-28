@@ -25,7 +25,7 @@ public class HomeController {
         this.customerService = customerService;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = {MediaType.APPLICATION_XML_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CustomResponseClass> saveFile(@RequestBody @Valid List<CustomerDTO> customerDTO) {
         customerService.saveCustomers(customerDTO);
         return new ResponseEntity<>(new CustomResponseClass("Customers have been added successfully"), HttpStatus.OK);

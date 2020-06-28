@@ -5,13 +5,13 @@ import org.springframework.http.HttpStatus;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class CustomErrorClass {
+public class ConstraintValidationError {
 
     private String time;
     private String message;
     private String status;
 
-    public CustomErrorClass(LocalDateTime time, String message) {
+    public ConstraintValidationError(LocalDateTime time, String message) {
         this.time = parseTime(time);
         this.message = message;
         this.status = HttpStatus.BAD_REQUEST.toString();
