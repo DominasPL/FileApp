@@ -1,5 +1,7 @@
 package com.github.dominaspl.convertapp.domain.dto;
 
+import com.github.dominaspl.convertapp.domain.annotation.AgeValidation;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -12,8 +14,8 @@ public class CustomerDTO {
     @Size(min = 3, max = 255, message = "Surname length must be greater than 2 and less than 256 characters")
     private String surname;
 
-
-    private Integer age;
+    @AgeValidation
+    private String age;
 
     @Valid
     private List<ContactDTO> contacts;
@@ -34,11 +36,11 @@ public class CustomerDTO {
         this.surname = surname;
     }
 
-    public Integer getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
