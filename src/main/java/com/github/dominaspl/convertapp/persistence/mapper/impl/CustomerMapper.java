@@ -22,7 +22,10 @@ public class CustomerMapper implements Mapper<CustomerDTO, CustomerEntity> {
         CustomerEntity customer = new CustomerEntity();
         customer.setName(customerDTO.getName());
         customer.setSurname(customerDTO.getSurname());
-        customer.setAge(Integer.parseInt(customerDTO.getAge()));
+        if (!Objects.isNull(customerDTO.getAge())) {
+            customer.setAge(Integer.parseInt(customerDTO.getAge()));
+        }
+
         return customer;
     }
 

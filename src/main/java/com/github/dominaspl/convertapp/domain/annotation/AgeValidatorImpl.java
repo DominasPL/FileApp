@@ -14,8 +14,8 @@ public class AgeValidatorImpl implements ConstraintValidator<AgeValidation, Stri
 
     @Override
     public boolean isValid(String age, ConstraintValidatorContext constraintValidatorContext) {
-        if (age == null || age.isEmpty()) {
-            return false;
+        if (age == null) {
+            return true;
         }
 
         Pattern pattern = Pattern.compile("\\d{1,3}");
