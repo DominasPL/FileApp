@@ -1,5 +1,6 @@
 package com.github.dominaspl.convertapp.domain.exception;
 
+import com.github.dominaspl.convertapp.web.error.CustomErrorClass;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,8 @@ import java.util.List;
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleAnyException(ConstraintViolationException ex) {
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<List<CustomErrorClass>> handleAnyException(ConstraintViolationException ex) {
 
         List<CustomErrorClass> responseErrors = new ArrayList<>();
 
