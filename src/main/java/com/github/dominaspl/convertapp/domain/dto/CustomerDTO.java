@@ -1,15 +1,22 @@
 package com.github.dominaspl.convertapp.domain.dto;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 public class CustomerDTO {
 
+    @Size(min = 3, max = 255, message = "Name length must be greater than 2 and less than 256 characters")
     private String name;
 
+    @Size(min = 3, max = 255, message = "Surname length must be greater than 2 and less than 256 characters")
     private String surname;
 
+    @NotNull
     private Integer age;
 
+    @Valid
     private List<ContactDTO> contacts;
 
     public String getName() {
