@@ -23,9 +23,9 @@ public class ContactMapper implements Mapper<ContactDTO, ContactEntity> {
         }
 
         List<String> regexList = Arrays.asList(
-                "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$",
+                "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,}){1}",
                 "^(\\d{3}[- .]?){2}\\d{3}$",
-                "^(?:([^@/<>'\\\"]+)@)?([^@/<>'\\\"]+)(?:/([^<>'\\\"]*))?$"
+                "^jbr:"
         );
         ContactEntity contact = new ContactEntity();
         contact.setType(0);
