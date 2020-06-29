@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CustomerService {
     void saveCustomers(List<CustomerDTO> customerDTO);
+    void saveCustomers(String body);
 }
