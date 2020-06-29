@@ -29,4 +29,10 @@ public class ContactDAO {
         );
     }
 
+    public boolean checkContactExists(String contact) {
+        String sql = "SELECT COUNT(*) FROM T_CONTACTS WHERE CONTACT = ?";
+        int count = jdbcTemplate.queryForObject(sql, new Object[] { contact }, Integer.class);
+        return count == 0;
+    }
+
 }
