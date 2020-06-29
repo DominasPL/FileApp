@@ -5,13 +5,13 @@ import com.github.dominaspl.convertapp.domain.entity.CustomerEntity;
 import com.github.dominaspl.convertapp.domain.enumeration.AssertionErrorKey;
 import com.github.dominaspl.convertapp.domain.enumeration.BusinessExceptionKey;
 import com.github.dominaspl.convertapp.domain.exception.BusinessException;
+import com.github.dominaspl.convertapp.domain.validator.impl.CustomerValidator;
 import com.github.dominaspl.convertapp.persistence.converter.TextConverter;
 import com.github.dominaspl.convertapp.persistence.dao.ContactDAO;
 import com.github.dominaspl.convertapp.persistence.dao.CustomerDAO;
 import com.github.dominaspl.convertapp.persistence.mapper.impl.ContactMapper;
 import com.github.dominaspl.convertapp.persistence.mapper.impl.CustomerMapper;
 import com.github.dominaspl.convertapp.service.CustomerService;
-import com.github.dominaspl.convertapp.domain.validator.impl.CustomerValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-//@Transactional
 public class CustomerServiceImpl implements CustomerService {
 
     private CustomerDAO customerDAO;
@@ -41,12 +40,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void saveCustomers(List<CustomerDTO> customerDTOList) {
-        if (Objects.isNull(customerDTOList)) {
+    public void saveCustomers(List<CustomerDTO> customers) {
+        if (Objects.isNull(customers)) {
             throw new AssertionError(AssertionErrorKey.PROVIDED_OBJECT_CANNOT_BE_NULL);
         }
-        customerDTOList.forEach(c -> customerValidator.validate(c));
-        save(customerDTOList);
+        validateAndSave(customers);
     }
 
     @Override
@@ -54,28 +52,33 @@ public class CustomerServiceImpl implements CustomerService {
         if (Objects.isNull(body)) {
             throw new AssertionError(AssertionErrorKey.PROVIDED_OBJECT_CANNOT_BE_NULL);
         }
-        List<CustomerDTO> customers = textConverter.convertFileToObjects(body);
-        customers.forEach(c -> customerValidator.validate(c));
-        save(customers);
+        validateAndSave(textConverter.convertFileToObjects(body));
     }
 
-    public void save(List<CustomerDTO> customerDTOList) {
-        if (Objects.isNull(customerDTOList)) {
+    @Override
+    public void save(CustomerDTO customerDTO) {
+        if (Objects.isNull(customerDTO)) {
             throw new AssertionError(AssertionErrorKey.PROVIDED_OBJECT_CANNOT_BE_NULL);
         }
-        List<CustomerEntity> customers = customerMapper.mapToEntities(customerDTOList);
+        CustomerEntity customer = customerMapper.mapToEntity(customerDTO);
         try {
             Long customerId;
-            for (int i = 0; i < customers.size(); i++) {
-                customerId = customerDAO.save(customers.get(i));
+                customerId = customerDAO.save(customer);
                 if (Objects.isNull(customerId)) {
                     throw new BusinessException(BusinessExceptionKey.OBJECT_NOT_FOUND_IN_DATABASE);
                 }
-                contactDAO.saveContacts(contactMapper.mapToEntities(customerDTOList.get(i).getContacts()), customerId);
-            }
+                contactDAO.saveContacts(contactMapper.mapToEntities(customerDTO.getContacts()), customerId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+    private void validateAndSave(List<CustomerDTO> customers) {
+        customers.forEach(c ->  {
+            customerValidator.validate(c);
+            save(c);
+        });
+    }
+
 }
 
