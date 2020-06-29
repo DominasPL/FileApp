@@ -1,10 +1,10 @@
-package com.github.dominaspl.convertapp.validator.impl;
+package com.github.dominaspl.convertapp.domain.validator.impl;
 
 import com.github.dominaspl.convertapp.domain.dto.ContactDTO;
 import com.github.dominaspl.convertapp.domain.enumeration.ValidationExceptionKey;
 import com.github.dominaspl.convertapp.domain.exception.CustomValidationException;
 import com.github.dominaspl.convertapp.persistence.dao.ContactDAO;
-import com.github.dominaspl.convertapp.validator.CustomValidator;
+import com.github.dominaspl.convertapp.domain.validator.CustomValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package com.github.dominaspl.convertapp.web.error;
+package com.github.dominaspl.convertapp.domain.error;
 
 import org.springframework.http.HttpStatus;
 

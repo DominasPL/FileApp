@@ -1,13 +1,13 @@
-package com.github.dominaspl.convertapp.web.response;
+package com.github.dominaspl.convertapp.domain.response;
 
 import org.springframework.http.HttpStatus;
 
-public class CustomResponseClass {
+public class CustomResponse {
 
     private String message;
     private String status;
 
-    public CustomResponseClass(String message) {
+    public CustomResponse(String message) {
         this.message = message;
         this.status = HttpStatus.OK.toString();
     }

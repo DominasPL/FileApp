@@ -1,4 +1,4 @@
-package com.github.dominaspl.convertapp.validator;
+package com.github.dominaspl.convertapp.domain.validator;
 
 public interface CustomValidator<T> {
 

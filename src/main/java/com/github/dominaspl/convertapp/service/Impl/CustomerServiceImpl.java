@@ -11,7 +11,7 @@ import com.github.dominaspl.convertapp.persistence.dao.CustomerDAO;
 import com.github.dominaspl.convertapp.persistence.mapper.impl.ContactMapper;
 import com.github.dominaspl.convertapp.persistence.mapper.impl.CustomerMapper;
 import com.github.dominaspl.convertapp.service.CustomerService;
-import com.github.dominaspl.convertapp.validator.impl.CustomerValidator;
+import com.github.dominaspl.convertapp.domain.validator.impl.CustomerValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

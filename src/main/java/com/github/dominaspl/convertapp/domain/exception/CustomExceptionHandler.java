@@ -1,8 +1,8 @@
 package com.github.dominaspl.convertapp.domain.exception;
 
 
-import com.github.dominaspl.convertapp.web.error.ConstraintValidationError;
-import com.github.dominaspl.convertapp.web.error.HttpMediaTypeError;
+import com.github.dominaspl.convertapp.domain.error.ConstraintValidationError;
+import com.github.dominaspl.convertapp.domain.error.HttpMediaTypeError;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
