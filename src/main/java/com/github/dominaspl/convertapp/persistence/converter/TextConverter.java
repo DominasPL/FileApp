@@ -44,8 +44,7 @@ public class TextConverter {
                 case 3:
                     continue;
                 default: {
-                    ContactDTO contact = new ContactDTO();
-                    contact.setContact(splittedData[i]);
+                    ContactDTO contact = new ContactDTO(splittedData[i]);
                     contacts.add(contact);
                     break;
                 }

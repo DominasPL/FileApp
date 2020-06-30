@@ -29,6 +29,9 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerValidator customerValidator;
     private TextConverter textConverter;
 
+    public CustomerServiceImpl() {
+    }
+
     @Autowired
     public CustomerServiceImpl(CustomerDAO customerDAO, ContactDAO contactDAO, CustomerMapper customerMapper, ContactMapper contactMapper, CustomerValidator customerValidator, TextConverter textConverter) {
         this.customerDAO = customerDAO;

@@ -8,14 +8,12 @@ public class ContactDTO {
         return contact;
     }
 
+    public ContactDTO(String contact) {
+        this.contact = contact;
+    }
+
     public void setContact(String contact) {
         this.contact = contact;
     }
 
-    @Override
-    public String toString() {
-        return "ContactDTO{" +
-                "contact='" + contact + '\'' +
-                '}';
-    }
 }

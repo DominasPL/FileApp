@@ -43,14 +43,4 @@ public class CustomerDTO {
     public void setContacts(List<ContactDTO> contacts) {
         this.contacts = contacts;
     }
-
-    @Override
-    public String toString() {
-        return "CustomerDTO{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", age='" + age + '\'' +
-                ", contacts=" + contacts +
-                '}';
-    }
 }
