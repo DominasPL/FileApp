@@ -8,9 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/")
@@ -25,15 +28,15 @@ public class HomeController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CustomResponse> saveFile(@RequestBody CustomerDTO customer) {
-        customerService.saveCustomers(new ArrayList<>());
-        return new ResponseEntity<>(new CustomResponse("Customers have been added successfully"), HttpStatus.OK);
+    public ResponseEntity<CustomResponse> saveCustomersXml(@RequestBody List<CustomerDTO> customers) {
+        customerService.saveCustomers(customers);
+        return new ResponseEntity<>(new CustomResponse("Customers have been added successfully"), HttpStatus.CREATED);
     }
 
     @PostMapping(consumes = MediaType.TEXT_PLAIN_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CustomResponse> saveCsvFile(@RequestBody String body) {
+    public ResponseEntity<CustomResponse> saveCustomersText(@RequestBody String body) {
         customerService.saveCustomers(body);
-        return new ResponseEntity<>(new CustomResponse("Customers have been added successfully"), HttpStatus.OK);
+        return new ResponseEntity<>(new CustomResponse("Customers have been added successfully"), HttpStatus.CREATED);
     }
 
 //    @RequestMapping(value = "customers", method = RequestMethod.POST,
