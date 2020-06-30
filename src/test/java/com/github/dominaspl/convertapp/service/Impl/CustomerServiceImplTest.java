@@ -140,4 +140,23 @@ class CustomerServiceImplTest {
         verify(contactDAO, atLeast(1)).saveContacts(refEq(contacts), refEq(customerId));
     }
 
+    @Test
+    void shouldThrowAssertionErrorWhenGivenCustomerListIsNullSaveCustomersTextMethod() {
+        //then
+        assertThrows(AssertionError.class, () -> customerService.saveCustomersText(null));
+    }
+
+    @Test
+    void shouldCallTextConverterMockConvertFileToObjectsMethod() {
+        //given
+        String body = "Hello World";
+
+        //when
+        when(textConverter.convertFileToObjects(body)).thenReturn(customers);
+        customerService.saveCustomersText(body);
+
+        //then
+        verify(textConverter, atLeast(1)).convertFileToObjects(refEq(body));
+    }
+
 }
