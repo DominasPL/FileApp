@@ -24,7 +24,7 @@ public class CustomerValidator implements CustomValidator<CustomerDTO> {
     @Override
     public void validate(CustomerDTO customerDTO) {
         if (Objects.isNull(customerDTO)) {
-            throw new CustomValidationException("Customer", ValidationExceptionKey.OBJECT_CANNOT_BE_NULL);
+                throw new CustomValidationException("Customer", ValidationExceptionKey.OBJECT_CANNOT_BE_NULL);
         } else {
             String name = customerDTO.getName();
             if (Objects.isNull(name)) {

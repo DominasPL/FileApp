@@ -51,6 +51,4 @@ class TextConverterTest {
         assertNotNull(customers.get(1).getAge());
         assertEquals(0, customers.get(1).getAge().length());
     }
-
-
 }

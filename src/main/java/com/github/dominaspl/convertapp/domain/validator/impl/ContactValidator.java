@@ -30,13 +30,9 @@ public class ContactValidator implements CustomValidator<ContactDTO> {
                 throw new CustomValidationException("Contact", ValidationExceptionKey.OBJECT_CANNOT_BE_NULL);
             } else if (contact.isEmpty() || contact.length() > 255) {
                 throw new CustomValidationException("Contact", ValidationExceptionKey.INCORRECT_OBJECT_LENGTH);
-            } else if (!checkContactIsUnique(contact)) {
+            } else if (!contactDAO.checkContactExists(contact)) {
                 throw new CustomValidationException("Contact", ValidationExceptionKey.NAME_IS_NOT_AVAILABLE);
             }
         }
-    }
-
-    private boolean checkContactIsUnique(String contact) {
-        return contactDAO.checkContactExists(contact);
     }
 }
