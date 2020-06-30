@@ -21,7 +21,6 @@ import static org.mockito.Mockito.*;
 class HomeControllerTest {
 
     private MockMvc mockMvc;
-    private CustomerDTO customerDTO;
     private List<CustomerDTO> customers;
     private String response;
 
@@ -35,15 +34,16 @@ class HomeControllerTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(homeController).build();
-        customerDTO = new CustomerDTO();
+
+        CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setName("Jan");
         customerDTO.setSurname("Gruszka");
         customerDTO.setAge("104");
         customerDTO.setContacts(new ArrayList<>());
 
         ContactDTO contactDTO = new ContactDTO("stepuchdominik@gmail.com");
-
         customerDTO.getContacts().add(contactDTO);
+
         customers = new ArrayList<>();
         customers.add(customerDTO);
         customers.add(customerDTO);
@@ -78,13 +78,8 @@ class HomeControllerTest {
                 "    </person>\n" +
                 "</people>";
 
-        String response = "{\n" +
-                "    \"message\": \"Customers have been added successfully\",\n" +
-                "    \"status\": \"200 OK\"\n" +
-                "}";
-
         //when
-        doNothing().when(customerService).saveCustomers(customers);
+        doNothing().when(customerService).saveCustomersXml(customers);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/")
@@ -93,7 +88,8 @@ class HomeControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().json(response));
 
-        verify(customerService, atLeast(1)).saveCustomers(refEq(customers));
+        //then
+        verify(customerService, atLeast(1)).saveCustomersXml(refEq(customers));
     }
 
     @Test
@@ -103,7 +99,7 @@ class HomeControllerTest {
                 "Adam,Nowak,,Lublin,123111123,adam@g33mail.com,123233321,jbr";
 
         //when
-        doNothing().when(customerService).saveCustomers(customers);
+        doNothing().when(customerService).saveCustomersText("");
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/")
@@ -112,7 +108,8 @@ class HomeControllerTest {
                         .andExpect(MockMvcResultMatchers.status().isCreated())
                         .andExpect(MockMvcResultMatchers.content().json(response));
 
-        verify(customerService, atLeast(1)).saveCustomers(refEq(customers));
+        //then
+        verify(customerService, atLeast(1)).saveCustomersText(refEq(customers));
     }
 
 }

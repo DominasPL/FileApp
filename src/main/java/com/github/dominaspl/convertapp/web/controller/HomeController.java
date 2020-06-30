@@ -29,13 +29,13 @@ public class HomeController {
 
     @PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CustomResponse> saveCustomersXml(@RequestBody List<CustomerDTO> customers) {
-        customerService.saveCustomers(customers);
+        customerService.saveCustomersXml(customers);
         return new ResponseEntity<>(new CustomResponse("Customers have been added successfully"), HttpStatus.CREATED);
     }
 
     @PostMapping(consumes = MediaType.TEXT_PLAIN_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CustomResponse> saveCustomersText(@RequestBody String body) {
-        customerService.saveCustomers(body);
+        customerService.saveCustomersText(body);
         return new ResponseEntity<>(new CustomResponse("Customers have been added successfully"), HttpStatus.CREATED);
     }
 }

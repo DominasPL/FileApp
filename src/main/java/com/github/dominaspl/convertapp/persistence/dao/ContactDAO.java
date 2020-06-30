@@ -21,18 +21,18 @@ public class ContactDAO {
         contacts.forEach(c -> save(c, customerId));
     }
 
-    public void save(ContactEntity contact, Long customerId) {
+    public boolean checkContactExists(String contact) {
+        String sql = "SELECT COUNT(*) FROM T_CONTACTS WHERE CONTACT = ?";
+        int count = jdbcTemplate.queryForObject(sql, new Object[] { contact }, Integer.class);
+        return count == 0;
+    }
+
+    private void save(ContactEntity contact, Long customerId) {
         jdbcTemplate.update("INSERT INTO T_CONTACTS (CUSTOMER_ID, TYPE, CONTACT) VALUES (?, ?, ?)",
                 customerId,
                 contact.getType(),
                 contact.getContact()
         );
-    }
-
-    public boolean checkContactExists(String contact) {
-        String sql = "SELECT COUNT(*) FROM T_CONTACTS WHERE CONTACT = ?";
-        int count = jdbcTemplate.queryForObject(sql, new Object[] { contact }, Integer.class);
-        return count == 0;
     }
 
 }
