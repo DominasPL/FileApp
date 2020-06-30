@@ -38,11 +38,4 @@ public class HomeController {
         customerService.saveCustomers(body);
         return new ResponseEntity<>(new CustomResponse("Customers have been added successfully"), HttpStatus.CREATED);
     }
-
-//    @RequestMapping(value = "customers", method = RequestMethod.POST,
-//            produces = "application/xml", consumes = "application/xml")
-//    public ResponseEntity<CustomerDTO> createDoctor(@RequestBody CustomerDTO customer) {
-//
-//        return ResponseEntity.status(HttpStatus.CREATED).body(customer);
-//    }
 }

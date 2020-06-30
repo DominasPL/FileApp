@@ -23,6 +23,7 @@ class HomeControllerTest {
     private MockMvc mockMvc;
     private CustomerDTO customerDTO;
     private List<CustomerDTO> customers;
+    private String response;
 
     @InjectMocks
     private HomeController homeController;
@@ -46,6 +47,11 @@ class HomeControllerTest {
         customers = new ArrayList<>();
         customers.add(customerDTO);
         customers.add(customerDTO);
+
+        response = "{\n" +
+                "    \"message\": \"Customers have been added successfully\",\n" +
+                "    \"status\": \"200 OK\"\n" +
+                "}";
     }
 
     @Test
@@ -90,36 +96,23 @@ class HomeControllerTest {
         verify(customerService, atLeast(1)).saveCustomers(refEq(customers));
     }
 
-//    @Test
-//    void testSaveCustomersFromString() throws Exception {
-//        //given
-//
-//
-//        //when
-//        Mockito.doNothing().when(customerService).saveCustomers(" ");
-//
-//        mockMvc.perform(
-//                MockMvcRequestBuilders.post("/")
-//                        .accept(MediaType.TEXT_PLAIN)
-//                        .contentType(MediaType.TEXT_PLAIN)
-//                        .content("DUPA "))
-//                        .andExpect(MockMvcResultMatchers.status().isOk());
-//
-//    }
+    @Test
+    void testIfSaveCustomersTextMethodReturnsCreatedHttpStatusAndCorrectJsonResponse() throws Exception {
+        //given
+        String customers = "Jan,Kowalski,12,Lublin,123123123,654 765 765,kowalski@gmail.com,jan@gmail.com\n" +
+                "Adam,Nowak,,Lublin,123111123,adam@g33mail.com,123233321,jbr";
 
+        //when
+        doNothing().when(customerService).saveCustomers(customers);
 
-//    @Test
-//    public void whenPostDoctor_thenAddDoctorCalled_andDoctorReturned() throws Exception {
-//
-//        //given
-//        String newCustomer = "<customer><name>Jan</name><surname>Kowalski</surname><age>12</age><city>Lublin</city><contacts><contact>dominik-stepuch@wp.pl</contact></contacts></customer>";
-//
-//
-//        //when
-//        mockMvc.perform(MockMvcRequestBuilders.post("/customers")
-//                .content(newCustomer)
-//                .header("Content-Type","application/xml"))
-//                .andExpect(MockMvcResultMatchers.status().is(HttpStatus.CREATED.value()));
-//
-//    }
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/")
+                        .header("Content-Type", "text/plain")
+                        .content(customers))
+                        .andExpect(MockMvcResultMatchers.status().isCreated())
+                        .andExpect(MockMvcResultMatchers.content().json(response));
+
+        verify(customerService, atLeast(1)).saveCustomers(refEq(customers));
+    }
+
 }
