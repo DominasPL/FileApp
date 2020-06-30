@@ -8,6 +8,9 @@ public class ContactDTO {
         return contact;
     }
 
+    public ContactDTO() {
+    }
+
     public ContactDTO(String contact) {
         this.contact = contact;
     }

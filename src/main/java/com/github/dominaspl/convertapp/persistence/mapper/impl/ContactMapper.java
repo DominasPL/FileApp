@@ -18,7 +18,7 @@ public class ContactMapper implements Mapper<ContactDTO, ContactEntity> {
 
     @Override
     public ContactEntity mapToEntity(ContactDTO contactDTO) {
-        if (Objects.isNull(contactDTO)) {
+        if (Objects.isNull(contactDTO) || Objects.isNull(contactDTO.getContact())) {
             throw new AssertionError(AssertionErrorKey.PROVIDED_OBJECT_CANNOT_BE_NULL);
         }
 
