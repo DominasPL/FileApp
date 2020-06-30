@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(CustomValidationException.class)
-    public ResponseEntity<ConstraintValidationError> handleAnyException(CustomValidationException ex) {
+    public ResponseEntity<ConstraintValidationError> handleCustomException(CustomValidationException ex) {
 
             ConstraintValidationError customError = new ConstraintValidationError(LocalDateTime.now(),
                     ex.getLocalizedMessage());

@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.*;
@@ -159,4 +160,12 @@ class CustomerServiceImplTest {
         verify(textConverter, atLeast(1)).convertFileToObjects(refEq(body));
     }
 
+    @Test
+    void shouldCreateCustomerServiceInstance() {
+        //given
+        CustomerServiceImpl customerService = new CustomerServiceImpl();
+
+        //then
+        assertNotNull(customerService);
+    }
 }
