@@ -9,7 +9,7 @@ public class CustomResponse {
 
     public CustomResponse(String message) {
         this.message = message;
-        this.status = HttpStatus.OK.toString();
+        this.status = HttpStatus.CREATED.toString();
     }
 
     public String getMessage() {

@@ -50,7 +50,7 @@ class HomeControllerTest {
 
         response = "{\n" +
                 "    \"message\": \"Customers have been added successfully\",\n" +
-                "    \"status\": \"200 OK\"\n" +
+                "    \"status\": \"201 CREATED\"\n" +
                 "}";
     }
 
