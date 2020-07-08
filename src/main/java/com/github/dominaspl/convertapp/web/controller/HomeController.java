@@ -8,10 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -38,4 +36,14 @@ public class HomeController {
         customerService.saveCustomersText(body);
         return new ResponseEntity<>(new CustomResponse("Customers have been added successfully"), HttpStatus.CREATED);
     }
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CustomResponse> saveCustomersXmlRequestParam(@RequestParam("file") MultipartFile file) {
+        String contentType = file.getContentType();
+        System.out.println("hello");
+//        customerService.saveCustomersXmlFile(file);
+        return new ResponseEntity<>(new CustomResponse("Customers have been added successfully"), HttpStatus.CREATED);
+    }
+
+
 }
