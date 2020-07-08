@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -112,4 +113,20 @@ class HomeControllerTest {
         verify(customerService, atLeast(1)).saveCustomersText(refEq(customers));
     }
 
+    @Test
+    void shouldCallCustomerServiceSaveCustomersXmlFileMethodAndReturnsCorrectJsonResponse() throws Exception {
+        //given
+        MockMultipartFile xmlFile = new MockMultipartFile("file", "customers.xml", "application/xml", "some xml".getBytes());
+
+        //when
+        doNothing().when(customerService).saveCustomersXmlFile(xmlFile);
+        mockMvc.perform(
+                MockMvcRequestBuilders.multipart("/")
+                        .file(xmlFile))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().json(response));
+
+        //then
+        verify(customerService, atLeast(1)).saveCustomersXmlFile(xmlFile);
+    }
 }

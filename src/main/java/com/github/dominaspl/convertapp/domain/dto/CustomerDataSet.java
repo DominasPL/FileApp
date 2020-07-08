@@ -4,6 +4,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @JacksonXmlRootElement(localName = "people")
@@ -11,7 +12,7 @@ public class CustomerDataSet {
 
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "person")
-    private List<CustomerDTO> customers;
+    private List<CustomerDTO> customers = new ArrayList<>();
 
     public List<CustomerDTO> getCustomers() {
         return customers;

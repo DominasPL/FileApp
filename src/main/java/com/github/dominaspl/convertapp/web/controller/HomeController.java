@@ -11,7 +11,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.xml.bind.JAXBException;
 import java.util.List;
 
 @RestController
@@ -39,10 +38,8 @@ public class HomeController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CustomResponse> saveCustomersXmlRequestParam(@RequestParam("file") MultipartFile file) throws JAXBException {
+    public ResponseEntity<CustomResponse> saveCustomersXmlRequestParam(@RequestParam("file") MultipartFile file) {
         customerService.saveCustomersXmlFile(file);
         return new ResponseEntity<>(new CustomResponse("Customers have been added successfully"), HttpStatus.CREATED);
     }
-
-
 }

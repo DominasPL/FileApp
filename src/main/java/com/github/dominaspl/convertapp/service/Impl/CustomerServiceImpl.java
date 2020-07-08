@@ -87,12 +87,11 @@ public class CustomerServiceImpl implements CustomerService {
         if (Objects.isNull(file)) {
             throw new AssertionError(AssertionErrorKey.PROVIDED_OBJECT_CANNOT_BE_NULL);
         }
-
         try {
             ObjectMapper xmlMapper = new XmlMapper();
             xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
             CustomerDataSet customers = xmlMapper.readValue(file.getInputStream(), CustomerDataSet.class);
-            System.out.println(":");
+            validateAndSave(customers.getCustomers());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,6 +103,5 @@ public class CustomerServiceImpl implements CustomerService {
             save(c);
         });
     }
-
 }
 
