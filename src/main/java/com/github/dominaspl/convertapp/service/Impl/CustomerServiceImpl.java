@@ -17,7 +17,9 @@ import com.github.dominaspl.convertapp.persistence.mapper.impl.ContactMapper;
 import com.github.dominaspl.convertapp.persistence.mapper.impl.CustomerMapper;
 import com.github.dominaspl.convertapp.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
@@ -87,15 +89,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void saveCustomersFile(MultipartFile file) {
+    public void saveCustomersFile(MultipartFile file) throws HttpMediaTypeNotSupportedException {
         if (Objects.isNull(file)) {
             throw new AssertionError(AssertionErrorKey.PROVIDED_OBJECT_CANNOT_BE_NULL);
         }
         String fileType = file.getContentType();
         if (!Objects.isNull(fileType) && fileType.equals("application/xml")) {
             validateAndSave(deserializeXmlFile(file));
-        } else {
+        } else if (!Objects.isNull(fileType) && (fileType.equals("text/plain") || fileType.equals("text/csv"))) {
             validateAndSave(convertTextToCustomerObjects(file));
+        } else {
+            throw new HttpMediaTypeNotSupportedException(HttpStatus.UNSUPPORTED_MEDIA_TYPE.toString());
         }
     }
 

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,7 +39,7 @@ public class HomeController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CustomResponse> saveCustomersFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<CustomResponse> saveCustomersFile(@RequestParam("file") MultipartFile file) throws HttpMediaTypeNotSupportedException {
         customerService.saveCustomersFile(file);
         return new ResponseEntity<>(new CustomResponse("Customers have been added successfully"), HttpStatus.CREATED);
     }

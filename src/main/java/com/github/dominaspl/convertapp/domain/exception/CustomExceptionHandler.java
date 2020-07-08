@@ -19,10 +19,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(CustomValidationException.class)
     public ResponseEntity<ConstraintValidationError> handleCustomException(CustomValidationException ex) {
-
             ConstraintValidationError customError = new ConstraintValidationError(LocalDateTime.now(),
                     ex.getLocalizedMessage());
-
         return new ResponseEntity<>(customError, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
@@ -31,6 +29,4 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         HttpMediaTypeError error = new HttpMediaTypeError(ex.getMessage() + ". XML or text is only accepted");
         return new ResponseEntity<>(error, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
     }
-
-
 }

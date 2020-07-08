@@ -17,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -217,7 +218,7 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void shouldCallCustomerValidatorValidateMethodSaveCustomersXmlFileMethod() {
+    void shouldCallCustomerValidatorValidateMethodSaveCustomersXmlFileMethod() throws HttpMediaTypeNotSupportedException {
         //given
         MockMultipartFile xmlFile = new MockMultipartFile("file",
                 "customers.xml", "application/xml", customersXml.getBytes());
