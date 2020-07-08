@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.mock.web.MockMultipartFile;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ class CustomerServiceImplTest {
     private CustomerDTO customerDTO;
     private List<CustomerDTO> customers;
     private CustomerEntity customer;
+    private String customersXml;
 
     @InjectMocks
     private CustomerServiceImpl customerService;
@@ -72,6 +74,45 @@ class CustomerServiceImplTest {
         customer.setName("Dominik");
         customer.setSurname("Dominas");
         customer.setAge(15);
+
+        customersXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" +
+                "<people>\n" +
+                "    <person>\n" +
+                "        <name>Jan</name>\n" +
+                "        <surname>Kowalski</surname>\n" +
+                "        <age>12</age>\n" +
+                "        <city>Lublin</city>\n" +
+                "        <contacts>\n" +
+                "            <contact>123123123</contact>\n" +
+                "        </contacts>\n" +
+                "        <contacts>\n" +
+                "            <contact>654 765 765</contact>\n" +
+                "        </contacts>\n" +
+                "        <contacts>\n" +
+                "            <contact>kowalski@gmail.com</contact>\n" +
+                "        </contacts>\n" +
+                "        <contacts>\n" +
+                "            <contact>jan@gmail.com</contact>\n" +
+                "        </contacts>\n" +
+                "    </person>\n" +
+                "    <person>\n" +
+                "        <name>Adam</name>\n" +
+                "        <surname>Nowak</surname>\n" +
+                "        <city>Lublin</city>\n" +
+                "        <contacts>\n" +
+                "            <contact>123123142</contact>\n" +
+                "        </contacts>\n" +
+                "        <contacts>\n" +
+                "            <contact>adam@gmail.com</contact>\n" +
+                "        </contacts>\n" +
+                "        <contacts>\n" +
+                "            <contact>12321</contact>\n" +
+                "        </contacts>\n" +
+                "        <contacts>\n" +
+                "            <contact>jbr:</contact>\n" +
+                "        </contacts>\n" +
+                "    </person>\n" +
+                "</people>";
     }
 
     @Test
@@ -167,5 +208,25 @@ class CustomerServiceImplTest {
 
         //then
         assertNotNull(customerService);
+    }
+
+    @Test
+    void shouldThrowAssertionErrorWhenGivenFileIsNullSaveCustomersXmlFileMethod() {
+        //then
+        assertThrows(AssertionError.class, () -> customerService.saveCustomersXmlFile(null));
+    }
+
+    @Test
+    void shouldCallCustomerValidatorValidateMethodSaveCustomersXmlFileMethod() {
+        //given
+        MockMultipartFile xmlFile = new MockMultipartFile("file",
+                "customers.xml", "application/xml", customersXml.getBytes());
+
+        //when
+        doNothing().when(customerValidator).validate(customerDTO);
+        customerService.saveCustomersXmlFile(xmlFile);
+
+        //then
+        verify(customerValidator, atLeast(2)).validate(any());
     }
 }

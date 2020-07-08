@@ -46,4 +46,5 @@ public class CustomerDTO {
     public void setContacts(List<ContactDTO> contacts) {
         this.contacts = contacts;
     }
+
 }

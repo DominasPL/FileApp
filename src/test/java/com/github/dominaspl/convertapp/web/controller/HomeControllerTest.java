@@ -116,7 +116,8 @@ class HomeControllerTest {
     @Test
     void shouldCallCustomerServiceSaveCustomersXmlFileMethodAndReturnsCorrectJsonResponse() throws Exception {
         //given
-        MockMultipartFile xmlFile = new MockMultipartFile("file", "customers.xml", "application/xml", "some xml".getBytes());
+        MockMultipartFile xmlFile = new MockMultipartFile("file",
+                "customers.xml", "application/xml", "".getBytes());
 
         //when
         doNothing().when(customerService).saveCustomersXmlFile(xmlFile);
