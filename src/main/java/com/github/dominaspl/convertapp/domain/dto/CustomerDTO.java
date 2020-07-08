@@ -1,5 +1,7 @@
 package com.github.dominaspl.convertapp.domain.dto;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+
 import java.util.List;
 
 public class CustomerDTO {
@@ -10,6 +12,7 @@ public class CustomerDTO {
 
     private String age;
 
+    @JacksonXmlElementWrapper(useWrapping = false)
     private List<ContactDTO> contacts;
 
     public String getName() {

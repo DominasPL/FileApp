@@ -1,6 +1,10 @@
 package com.github.dominaspl.convertapp.service.Impl;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.github.dominaspl.convertapp.domain.dto.CustomerDTO;
+import com.github.dominaspl.convertapp.domain.dto.CustomerDataSet;
 import com.github.dominaspl.convertapp.domain.entity.CustomerEntity;
 import com.github.dominaspl.convertapp.domain.enumeration.AssertionErrorKey;
 import com.github.dominaspl.convertapp.domain.enumeration.BusinessExceptionKey;
@@ -14,7 +18,9 @@ import com.github.dominaspl.convertapp.persistence.mapper.impl.CustomerMapper;
 import com.github.dominaspl.convertapp.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
@@ -72,6 +78,22 @@ public class CustomerServiceImpl implements CustomerService {
                 }
                 contactDAO.saveContacts(contactMapper.mapToEntities(customerDTO.getContacts()), customerId);
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void saveCustomersXmlFile(MultipartFile file) {
+        if (Objects.isNull(file)) {
+            throw new AssertionError(AssertionErrorKey.PROVIDED_OBJECT_CANNOT_BE_NULL);
+        }
+
+        try {
+            ObjectMapper xmlMapper = new XmlMapper();
+            xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+            CustomerDataSet customers = xmlMapper.readValue(file.getInputStream(), CustomerDataSet.class);
+            System.out.println(":");
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
