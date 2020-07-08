@@ -20,10 +20,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -83,18 +87,39 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void saveCustomersXmlFile(MultipartFile file) {
+    public void saveCustomersFile(MultipartFile file) {
         if (Objects.isNull(file)) {
             throw new AssertionError(AssertionErrorKey.PROVIDED_OBJECT_CANNOT_BE_NULL);
         }
+        String fileType = file.getContentType();
+        if (!Objects.isNull(fileType) && fileType.equals("application/xml")) {
+            validateAndSave(deserializeXmlFile(file));
+        } else {
+            validateAndSave(convertTextToCustomerObjects(file));
+        }
+    }
+
+    private List<CustomerDTO> convertTextToCustomerObjects(MultipartFile file) {
         try {
-            ObjectMapper xmlMapper = new XmlMapper();
-            xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-            CustomerDataSet customers = xmlMapper.readValue(file.getInputStream(), CustomerDataSet.class);
-            validateAndSave(customers.getCustomers());
+            String customersText = new BufferedReader(new InputStreamReader(file.getInputStream()))
+                    .lines().collect(Collectors.joining("\n"));
+            return textConverter.convertFileToObjects(customersText);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return new ArrayList<>();
+    }
+
+    private List<CustomerDTO> deserializeXmlFile(MultipartFile file) {
+        try {
+            ObjectMapper xmlMapper = new XmlMapper();
+            xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+            CustomerDataSet dataSet = xmlMapper.readValue(file.getInputStream(), CustomerDataSet.class);
+            return dataSet.getCustomers();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
     private void validateAndSave(List<CustomerDTO> customers) {

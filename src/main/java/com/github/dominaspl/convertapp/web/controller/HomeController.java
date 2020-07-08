@@ -38,8 +38,8 @@ public class HomeController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CustomResponse> saveCustomersXmlRequestParam(@RequestParam("file") MultipartFile file) {
-        customerService.saveCustomersXmlFile(file);
+    public ResponseEntity<CustomResponse> saveCustomersFile(@RequestParam("file") MultipartFile file) {
+        customerService.saveCustomersFile(file);
         return new ResponseEntity<>(new CustomResponse("Customers have been added successfully"), HttpStatus.CREATED);
     }
 }

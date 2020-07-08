@@ -213,7 +213,7 @@ class CustomerServiceImplTest {
     @Test
     void shouldThrowAssertionErrorWhenGivenFileIsNullSaveCustomersXmlFileMethod() {
         //then
-        assertThrows(AssertionError.class, () -> customerService.saveCustomersXmlFile(null));
+        assertThrows(AssertionError.class, () -> customerService.saveCustomersFile(null));
     }
 
     @Test
@@ -224,7 +224,7 @@ class CustomerServiceImplTest {
 
         //when
         doNothing().when(customerValidator).validate(customerDTO);
-        customerService.saveCustomersXmlFile(xmlFile);
+        customerService.saveCustomersFile(xmlFile);
 
         //then
         verify(customerValidator, atLeast(2)).validate(any());

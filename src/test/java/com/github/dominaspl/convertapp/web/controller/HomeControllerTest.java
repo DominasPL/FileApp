@@ -114,13 +114,13 @@ class HomeControllerTest {
     }
 
     @Test
-    void shouldCallCustomerServiceSaveCustomersXmlFileMethodAndReturnsCorrectJsonResponse() throws Exception {
+    void shouldCallCustomerServiceSaveCustomersFileMethodAndReturnsCorrectJsonResponse() throws Exception {
         //given
         MockMultipartFile xmlFile = new MockMultipartFile("file",
                 "customers.xml", "application/xml", "".getBytes());
 
         //when
-        doNothing().when(customerService).saveCustomersXmlFile(xmlFile);
+        doNothing().when(customerService).saveCustomersFile(xmlFile);
         mockMvc.perform(
                 MockMvcRequestBuilders.multipart("/")
                         .file(xmlFile))
@@ -128,6 +128,6 @@ class HomeControllerTest {
                 .andExpect(MockMvcResultMatchers.content().json(response));
 
         //then
-        verify(customerService, atLeast(1)).saveCustomersXmlFile(xmlFile);
+        verify(customerService, atLeast(1)).saveCustomersFile(xmlFile);
     }
 }

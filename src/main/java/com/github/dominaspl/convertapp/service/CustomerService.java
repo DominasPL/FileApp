@@ -9,5 +9,5 @@ public interface CustomerService {
     void saveCustomersXml(List<CustomerDTO> customerDTO);
     void saveCustomersText(String body);
     void save(CustomerDTO customerDTO);
-    void saveCustomersXmlFile(MultipartFile file);
+    void saveCustomersFile(MultipartFile file);
 }
