@@ -230,4 +230,29 @@ class CustomerServiceImplTest {
         //then
         verify(customerValidator, atLeast(2)).validate(any());
     }
+
+    @Test
+    void shouldThrowHttpMediaTypeNotSupportedExceptionWhenGivenFileTypeIsNotCorrect() throws HttpMediaTypeNotSupportedException {
+        //given
+        MockMultipartFile png = new MockMultipartFile("file",
+                "image.png", "image/png", "test".getBytes());
+
+        //then
+        assertThrows(HttpMediaTypeNotSupportedException.class, () -> customerService.saveCustomersFile(png));
+    }
+
+    @Test
+    void shouldCallTextConverterConvertMethodToConvertFileToCustomerObjects() throws HttpMediaTypeNotSupportedException {
+        //given
+        String body = "Hello World";
+        MockMultipartFile txtFile = new MockMultipartFile("file",
+                "customers.txt", "text/plain", "customers".getBytes());
+
+        //when
+        when(textConverter.convertFileToObjects(body)).thenReturn(customers);
+        customerService.saveCustomersFile(txtFile);
+
+        //then
+        verify(textConverter, atLeast(1)).convertFileToObjects(any());
+    }
 }
